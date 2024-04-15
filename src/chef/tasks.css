@@ -1,0 +1,44 @@
+.tasks-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust the height to take up 100% of the viewport height */
+}
+
+.container-wrapper {
+  display: flex;
+  gap: 20px; /* Add some space between the containers */
+}
+
+.container {
+  width: 75vh; /* Make the container width 75% of the viewport width */
+  max-width: 600px; /* Limit the maximum width of the container */
+  height: 75vh; /* Make the container height 75% of the viewport height */
+  padding: 40px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.container:hover {
+  transform: translateY(-10px); /* Adjust hover effect */
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 16px 32px; /* Adjust button padding */
+  font-size: 20px; /* Increase font size for better readability */
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
