@@ -19,6 +19,7 @@ const Users = () => {
     try {
       const response = await axios.get(`http://${SERVER_URL}:5001/users`);
       setUsers(response.data.users);
+      console.log(response);
     } catch (error) {
       console.error("Error fetching users:", error);
     }

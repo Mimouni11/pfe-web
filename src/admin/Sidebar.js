@@ -87,21 +87,7 @@ const Sidebar = () => {
                 <MenuItem value="category3">Category 3</MenuItem>
               </Select>
             </li>
-            <li className="sidebar-list-item">
-              <a href="">
-                <BsPeopleFill className="icon" /> Customers
-              </a>
-            </li>
-            <li className="sidebar-list-item">
-              <a href="">
-                <BsListCheck className="icon" /> Inventory
-              </a>
-            </li>
-            <li className="sidebar-list-item">
-              <a href="">
-                <BsMenuButtonWideFill className="icon" /> Reports
-              </a>
-            </li>
+
             <li className="sidebar-list-item">
               <a href="">
                 <BsFillGearFill className="icon" /> Setting
@@ -111,8 +97,12 @@ const Sidebar = () => {
         )}
       </ul>
       <div className="logout-container">
-        <LogoutIcon className="logout-icon" onClick={handleLogout} />
-        Deconnexion
+        <ul>
+          <li className="sidebar-list-item" onClick={handleLogout}>
+            <LogoutIcon className="logout-icon" />
+            Deconnexion
+          </li>
+        </ul>
       </div>
     </aside>
   );

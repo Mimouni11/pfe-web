@@ -130,46 +130,51 @@ const DriverTasks = () => {
     fetchFreeDrivers(selectedTruck);
   }, [selectedTruck]);
 
-  const handleSaveTask = (matricule) => {
+  const handleSaveTask = (matricule, index) => {
     // Check if all necessary data is available
     console.log("Selected driver:", selectedDriver);
     console.log("Selected date:", selectedDate);
-    console.log("Task fields:", taskFields);
+    console.log("Task fields:", taskFields[index]);
 
     if (
       !selectedDriver.username || // Check if username is present
       !matricule || // Check if matricule is present
       !selectedDate ||
-      taskFields.some((task) => !task.id || !task.description)
+      !taskFields[index] ||
+      !taskFields[index].id ||
+      !taskFields[index].description
     ) {
       alert("Please select a driver, date, and fill in all task fields");
       return;
     }
 
-    // Iterate over taskFields array and send POST request for each task
-    taskFields.forEach((task) => {
-      const taskData = {
-        id_task: task.id,
-        username: selectedDriver.username, // Pass the username instead of id_driver
-        task: task.description,
-        date: selectedDate.toISOString().split("T")[0],
-        matricule: matricule, // Use the matricule from the table row
-      };
+    const task = taskFields[index];
 
-      // Make POST request to insert task for the driver
-      axios
-        .post(`http://${SERVER_URL}:5001/insert-tasks-driver`, taskData)
-        .then((response) => {
-          console.log("Task inserted successfully:", response.data.message);
-          // Optionally, you can reset the taskFields array after successful insertion
-          setTaskFields([{ id: "", description: "" }]);
-        })
-        .catch((error) => {
-          console.error("Error inserting task:", error);
+    // Prepare data for the current row
+    const taskData = {
+      id_task: task.id,
+      username: selectedDriver.username, // Pass the username instead of id_driver
+      task: task.description,
+      date: selectedDate.toISOString().split("T")[0],
+      matricule: matricule, // Use the matricule from the table row
+    };
+
+    // Make POST request to insert task for the driver
+    axios
+      .post(`http://${SERVER_URL}:5001/insert-tasks-driver`, taskData)
+      .then((response) => {
+        console.log("Task inserted successfully:", response.data.message);
+        // Optionally, you can reset the taskFields array for the current row after successful insertion
+        setTaskFields((prevTaskFields) => {
+          const updatedTaskFields = [...prevTaskFields];
+          updatedTaskFields[index] = { id: "", description: "" };
+          return updatedTaskFields;
         });
-    });
+      })
+      .catch((error) => {
+        console.error("Error inserting task:", error);
+      });
   };
-
   const navigateToQRCode = () => {
     navigate("/chef/QrCode"); // Navigate to "/qr-code" when the button is clicked
   };
@@ -307,7 +312,7 @@ const DriverTasks = () => {
                     {/* Save button */}
                     <button
                       style={{ padding: "5px 10px", fontSize: "14px" }}
-                      onClick={() => handleSaveTask(truck.matricule)}
+                      onClick={() => handleSaveTask(truck.matricule, index)}
                     >
                       Save
                     </button>

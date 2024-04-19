@@ -7,12 +7,14 @@ import Login from "./Login";
 import Home from "./admin/Home"; // Import the Home component
 import Gerer from "./admin/Gerer";
 import ChefHome from "./chef/Home";
-import Tasks from "./chef/Tasks";
 import Mecano_tasks from "./chef/Mecano_tasks";
 import Driver_tasks from "./chef/Driver_tasks";
 import QrCode from "./chef/QrCode";
 import Profile from "./chef/Profile";
 import Users from "./admin/Users";
+import "./chef/tasks.css";
+import "mdb-react-ui-kit/dist/css/mdb.min.css";
+
 function App() {
   const [loading, setLoading] = useState(true);
   const [showLoginform, setShowLoginform] = useState(false);
@@ -42,7 +44,6 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/home" element={<Home />} />
             <Route path="/chef/Home" element={<ChefHome />} />
-            <Route path="/chef/Tasks" element={<Tasks />} />
             <Route path="/chef/Profile" element={<Profile />}></Route>
             <Route path="/chef/Mecano_tasks" element={<Mecano_tasks />} />
             <Route path="/chef/Driver_tasks" element={<Driver_tasks />} />
