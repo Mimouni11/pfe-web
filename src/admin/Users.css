@@ -1,0 +1,48 @@
+.users-page {
+  padding-top: 50px; /* Adjust the padding to lower the table from the Header */
+  background-color: #dde6ed;
+}
+
+.user-list-container {
+  max-width: 100px; /* Set a maximum width for the user list container */
+  margin: 0 auto; /* Center the container horizontally */
+  padding: 20px; /* Add padding to the container */
+}
+
+h1 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.user-list-container Table {
+  width: 100%; /* Make the table width 100% */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  z-index: 999; /* Ensure the overlay is on top of other content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Box shadow for a subtle effect */
+}
+
+.refresh {
+  color: black;
+  margin-left: 2%;
+}

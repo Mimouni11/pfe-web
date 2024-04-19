@@ -10,7 +10,9 @@ import DatePicker from "react-datepicker";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom"; // Import useNavigate hook
-
+import SERVER_URL from "..///config";
+import Sidebar from "./Sidebar";
+import Header from "./Header";
 const DriverTasks = () => {
   const [selectedDate, setSelectedDate] = useState(null); // State for selected date
   const [freeTrucks, setFreeTrucks] = useState([]); // State for free trucks
@@ -20,16 +22,36 @@ const DriverTasks = () => {
   const [taskFields, setTaskFields] = useState([{ id: "", description: "" }]);
   const navigate = useNavigate(); // Initialize useNavigate hook
 
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setDarkMode((prevDarkMode) => {
+      const newDarkMode = !prevDarkMode;
+      console.log("Dark mode toggled:", newDarkMode);
+      return newDarkMode;
+    });
+  };
+
   const handleTaskIdChange = (value, index) => {
-    const updatedTaskFields = [...taskFields];
-    updatedTaskFields[index].id = value;
-    setTaskFields(updatedTaskFields);
+    setTaskFields((prevTaskFields) => {
+      const updatedTaskFields = [...prevTaskFields];
+      updatedTaskFields[index] = {
+        ...updatedTaskFields[index],
+        id: value,
+      };
+      return updatedTaskFields;
+    });
   };
 
   const handleTaskDescriptionChange = (value, index) => {
-    const updatedTaskFields = [...taskFields];
-    updatedTaskFields[index].description = value;
-    setTaskFields(updatedTaskFields);
+    setTaskFields((prevTaskFields) => {
+      const updatedTaskFields = [...prevTaskFields];
+      updatedTaskFields[index] = {
+        ...updatedTaskFields[index],
+        description: value,
+      };
+      return updatedTaskFields;
+    });
   };
 
   const handleDateChange = (date) => {
@@ -50,7 +72,7 @@ const DriverTasks = () => {
     const formattedDate = selectedDate.toISOString().split("T")[0]; // Calculate formatted date
 
     axios
-      .get("http://192.168.1.136:5001/free-trucks", {
+      .get(`http://${SERVER_URL}:5001/free-trucks`, {
         params: {
           type: selectedTruck,
           date: formattedDate,
@@ -77,7 +99,7 @@ const DriverTasks = () => {
 
     // Make API call to fetch free drivers based on truck
     axios
-      .post("http://192.168.1.136:5001/free-drivers", {
+      .post(`http://${SERVER_URL}:5001/free-drivers`, {
         date: selectedDate.toISOString().split("T")[0], // Pass date as a single-element tuple
         type: selectedTruck,
       })
@@ -136,7 +158,7 @@ const DriverTasks = () => {
 
       // Make POST request to insert task for the driver
       axios
-        .post("http://192.168.1.136:5001/insert-tasks-driver", taskData)
+        .post(`http://${SERVER_URL}:5001/insert-tasks-driver`, taskData)
         .then((response) => {
           console.log("Task inserted successfully:", response.data.message);
           // Optionally, you can reset the taskFields array after successful insertion
@@ -153,143 +175,149 @@ const DriverTasks = () => {
   };
 
   return (
-    <div>
-      <div style={styles.carouselContainer}>
-        <MDBCarousel
-          showIndicators
-          showControls
-          fade
-          ride="carousel"
-          style={styles.carousel}
+    <div className={`grid-container ${darkMode ? "dark-mode" : ""}`}>
+      <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      <Sidebar darkMode={darkMode} />
+      <div className="main-container">
+        <div style={styles.carouselContainer}>
+          <MDBCarousel
+            showIndicators
+            showControls
+            fade
+            ride="carousel"
+            style={styles.carousel}
+          >
+            <MDBCarouselItem itemId={1}>
+              <img src="/isuzu.jpg" className="d-block w-100" alt="..." />
+              <MDBCarouselCaption>
+                <h5>Pick Up</h5>
+                <MDBBtn
+                  color="primary"
+                  onClick={() => handleTruckSelection("pickup")}
+                >
+                  Choose
+                </MDBBtn>
+              </MDBCarouselCaption>
+            </MDBCarouselItem>
+
+            <MDBCarouselItem itemId={2}>
+              <img src="/box_truck.jpeg" className="d-block w-100" alt="..." />
+              <MDBCarouselCaption>
+                <h5>Small Truck</h5>
+                <MDBBtn
+                  color="primary"
+                  onClick={() => handleTruckSelection("truck")}
+                >
+                  Choose
+                </MDBBtn>
+              </MDBCarouselCaption>
+            </MDBCarouselItem>
+
+            <MDBCarouselItem itemId={3}>
+              <img src="/truck.jpg" className="d-block w-100" alt="..." />
+              <MDBCarouselCaption>
+                <h5>Semi</h5>
+                <MDBBtn
+                  color="primary"
+                  onClick={() => handleTruckSelection("semi")}
+                >
+                  Choose
+                </MDBBtn>
+              </MDBCarouselCaption>
+            </MDBCarouselItem>
+          </MDBCarousel>
+        </div>
+        <h2>Select a Date</h2>
+        <DatePicker
+          selected={selectedDate}
+          onChange={(date) => handleDateChange(date)}
+        />
+        <input
+          type="text"
+          value={selectedTruck}
+          onChange={(e) => setSelectedTruck(e.target.value)}
+          placeholder="Selected Truck"
+        />
+        <MDBBtn
+          onClick={() => fetchFreeTrucks(selectedTruck)}
+          color="primary"
+          className="mt-3"
         >
-          <MDBCarouselItem itemId={1}>
-            <img src="/isuzu.jpg" className="d-block w-100" alt="..." />
-            <MDBCarouselCaption>
-              <h5>Pick Up</h5>
-              <MDBBtn
-                color="primary"
-                onClick={() => handleTruckSelection("pickup")}
-              >
-                Choose
-              </MDBBtn>
-            </MDBCarouselCaption>
-          </MDBCarouselItem>
+          Fetch Free Trucks
+        </MDBBtn>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Matricule</th>
+              <th>Type</th>
+              <th>Task ID</th>
+              <th>Task Description</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Array.isArray(freeTrucks) &&
+              freeTrucks.map((truck, index) => (
+                <tr key={truck.matricule}>
+                  <td>{truck.matricule}</td>
+                  <td>{truck.type}</td>
+                  <td>
+                    <input
+                      type="text"
+                      value={taskFields[index] ? taskFields[index].id : ""}
+                      onChange={(e) =>
+                        handleTaskIdChange(e.target.value, index)
+                      }
+                      placeholder="Task ID"
+                    />
+                  </td>
+                  <td>
+                    <textarea
+                      value={
+                        taskFields[index] ? taskFields[index].description : ""
+                      }
+                      onChange={(e) =>
+                        handleTaskDescriptionChange(e.target.value, index)
+                      }
+                      placeholder="Task Description"
+                    ></textarea>
+                  </td>
+                  <td>
+                    {/* Button to fetch free drivers */}
+                    <button
+                      style={{ padding: "5px 10px", fontSize: "14px" }}
+                      onClick={() => handleFetchFreeDrivers(truck)}
+                    >
+                      Fetch Free Drivers
+                    </button>
+                    {/* Dropdown menu */}
+                    <select
+                      style={{ padding: "5px", fontSize: "14px" }}
+                      onChange={(event) => handleDriverSelection(event, truck)}
+                      value={selectedDriver ? selectedDriver.id : ""}
+                    >
+                      <option value="">Select Driver</option>
+                      {fetchedDrivers.map((driver) => (
+                        <option key={driver.id} value={driver.id}>
+                          {driver.username}
+                        </option>
+                      ))}
+                    </select>
 
-          <MDBCarouselItem itemId={2}>
-            <img src="/box_truck.jpeg" className="d-block w-100" alt="..." />
-            <MDBCarouselCaption>
-              <h5>Small Truck</h5>
-              <MDBBtn
-                color="primary"
-                onClick={() => handleTruckSelection("truck")}
-              >
-                Choose
-              </MDBBtn>
-            </MDBCarouselCaption>
-          </MDBCarouselItem>
-
-          <MDBCarouselItem itemId={3}>
-            <img src="/truck.jpg" className="d-block w-100" alt="..." />
-            <MDBCarouselCaption>
-              <h5>Semi</h5>
-              <MDBBtn
-                color="primary"
-                onClick={() => handleTruckSelection("semi")}
-              >
-                Choose
-              </MDBBtn>
-            </MDBCarouselCaption>
-          </MDBCarouselItem>
-        </MDBCarousel>
+                    {/* Save button */}
+                    <button
+                      style={{ padding: "5px 10px", fontSize: "14px" }}
+                      onClick={() => handleSaveTask(truck.matricule)}
+                    >
+                      Save
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </Table>
+        <button onClick={navigateToQRCode}>Go to QR Code</button>
       </div>
-      <h2>Select a Date</h2>
-      <DatePicker
-        selected={selectedDate}
-        onChange={(date) => handleDateChange(date)}
-      />
-      <input
-        type="text"
-        value={selectedTruck}
-        onChange={(e) => setSelectedTruck(e.target.value)}
-        placeholder="Selected Truck"
-      />
-      <MDBBtn
-        onClick={() => fetchFreeTrucks(selectedTruck)}
-        color="primary"
-        className="mt-3"
-      >
-        Fetch Free Trucks
-      </MDBBtn>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Matricule</th>
-            <th>Type</th>
-            <th>Task ID</th>
-            <th>Task Description</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Array.isArray(freeTrucks) &&
-            freeTrucks.map((truck, index) => (
-              <tr key={index}>
-                <td>{truck.matricule}</td>
-                <td>{truck.type}</td>
-                <td>
-                  <input
-                    type="text"
-                    value={taskFields[index] ? taskFields[index].id : ""}
-                    onChange={(e) => handleTaskIdChange(e.target.value, index)}
-                    placeholder="Task ID"
-                  />
-                </td>
-                <td>
-                  <textarea
-                    value={
-                      taskFields[index] ? taskFields[index].description : ""
-                    }
-                    onChange={(e) =>
-                      handleTaskDescriptionChange(e.target.value, index)
-                    }
-                    placeholder="Task Description"
-                  ></textarea>
-                </td>
-                <td>
-                  {/* Button to fetch free drivers */}
-                  <button
-                    style={{ padding: "5px 10px", fontSize: "14px" }}
-                    onClick={() => handleFetchFreeDrivers(truck)}
-                  >
-                    Fetch Free Drivers
-                  </button>
-                  {/* Dropdown menu */}
-                  <select
-                    style={{ padding: "5px", fontSize: "14px" }}
-                    onChange={(event) => handleDriverSelection(event, truck)}
-                    value={selectedDriver ? selectedDriver.id : ""}
-                  >
-                    <option value="">Select Driver</option>
-                    {fetchedDrivers.map((driver) => (
-                      <option key={driver.id} value={driver.id}>
-                        {driver.username}
-                      </option>
-                    ))}
-                  </select>
-
-                  {/* Save button */}
-                  <button
-                    style={{ padding: "5px 10px", fontSize: "14px" }}
-                    onClick={() => handleSaveTask(truck.matricule)}
-                  >
-                    Save
-                  </button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </Table>
-      <button onClick={navigateToQRCode}>Go to QR Code</button>
     </div>
   );
 };

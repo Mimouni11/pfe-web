@@ -4,13 +4,15 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Import BrowserRouter and Route
 import Loading from "./loading";
 import Login from "./Login";
-import Home from "./Home"; // Import the Home component
-import Gerer from "./Gerer";
+import Home from "./admin/Home"; // Import the Home component
+import Gerer from "./admin/Gerer";
 import ChefHome from "./chef/Home";
 import Tasks from "./chef/Tasks";
 import Mecano_tasks from "./chef/Mecano_tasks";
 import Driver_tasks from "./chef/Driver_tasks";
 import QrCode from "./chef/QrCode";
+import Profile from "./chef/Profile";
+import Users from "./admin/Users";
 function App() {
   const [loading, setLoading] = useState(true);
   const [showLoginform, setShowLoginform] = useState(false);
@@ -41,10 +43,13 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/chef/Home" element={<ChefHome />} />
             <Route path="/chef/Tasks" element={<Tasks />} />
+            <Route path="/chef/Profile" element={<Profile />}></Route>
             <Route path="/chef/Mecano_tasks" element={<Mecano_tasks />} />
             <Route path="/chef/Driver_tasks" element={<Driver_tasks />} />
             <Route path="/chef/QrCode" element={<QrCode />} />
+            <Route path="/Users" element={<Users />} />
             <Route path="/Gerer" element={<Gerer />} />{" "}
+            <Route path="/Login" element={<Login />} />{" "}
             {/* Add more routes as needed */}
           </Routes>
         )}

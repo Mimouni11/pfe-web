@@ -1,23 +1,14 @@
-// Loading.js
 import React from "react";
-import { css } from "@emotion/react";
-import RotateLoader from "react-spinners/RotateLoader";
+import { BarLoader } from "react-spinners";
 import "./loading.css";
 
-const Loading = () => {
-  const override = css`
-    display: block;
-    margin: 0 auto;
-  `;
-
+const SplashScreen = () => {
   return (
-    <div className="loading-container">
-      <img src="/semi.jpg" alt="Logo" className="logo" />{" "}
-      <div className="spinner-container">
-        <RotateLoader color="#000000" css={override} loading={true} size={30} />
-      </div>
+    <div className="splash-screen">
+      <img src="/logo.png" alt="Logo" className="logo" />
+      <BarLoader color="#0084FF" />
     </div>
   );
 };
 
-export default Loading;
+export default SplashScreen;

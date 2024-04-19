@@ -1,27 +1,33 @@
 import React, { useState } from "react";
-import "./login.css";
-import "mdb-react-ui-kit/dist/css/mdb.min.css";
+import { useEffect } from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
+import SERVER_URL from "./config";
 import { useNavigate } from "react-router-dom";
-import {
-  MDBBtn,
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBInput,
-  MDBIcon,
-  MDBCheckbox,
-} from "mdb-react-ui-kit";
+import { blue } from "@mui/material/colors";
 
-import axios from "axios"; // Import Axios library
+const defaultTheme = createTheme();
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
+  useEffect(() => {
+    if (isAuthenticated()) {
+      navigate("/Home"); // Redirect to the home page if already authenticated
+    }
+  }, []);
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -31,14 +37,15 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://192.168.1.107:5001/admin/authenticate",
+        `http://${SERVER_URL}:5001/admin/authenticate`,
         formData
       );
 
       if (response.data.status === "success") {
         console.log("Authentication successful");
-        setError("");
 
+        setError("");
+        localStorage.setItem("token", response.data.token);
         const role = response.data.role;
         if (role === "admin") {
           navigate("/Home");
@@ -56,57 +63,85 @@ const Login = () => {
     }
   };
 
+  const isAuthenticated = () => {
+    return localStorage.getItem("token") !== null;
+  };
+
   return (
-    <div className="M1">
-      <MDBContainer fluid className="C1">
-        <MDBRow className="d-flex justify-content-center align-items-center h-100">
-          <MDBCol col="12">
-            <MDBCard
-              className="bg-white my-5 mx-auto"
-              style={{ borderRadius: "1rem", maxWidth: "500px" }}
-            >
-              <MDBCardBody className="p-5 w-100 d-flex flex-column">
-                <h2 className="fw-bold mb-2 text-center">Sign in</h2>
-                <p className="text-white-50 mb-3">
-                  Please enter your login and password!
-                </p>
+    <ThemeProvider theme={defaultTheme}>
+      <Grid container component="main" sx={{ height: "100vh" }}>
+        <CssBaseline />
+        <Grid
+          item
+          xs={false}
+          sm={7}
+          md={6}
+          sx={{
+            backgroundImage: 'url("/truckpark.jpg")',
 
-                <MDBInput
-                  wrapperClass="mb-4 w-100"
-                  label="Email address"
-                  id="formControlLg"
-                  type="email"
-                  size="lg"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-                <MDBInput
-                  wrapperClass="mb-4 w-100"
-                  label="Password"
-                  id="formControlLg"
-                  type="password"
-                  size="lg"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+            backgroundRepeat: "no-repeat",
+            backgroundColor: (t) =>
+              t.palette.mode === "light"
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <img src="/logo.png" alt="Logo" className="logo" />
 
-                <MDBCheckbox
-                  name="flexCheck"
-                  id="flexCheckDefault"
-                  className="mb-4"
-                  label="Remember password"
-                />
+            <Typography component="h1" variant="h5">
+              Athentification
+            </Typography>
+            <Box component="form" noValidate sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label=" Identifiant"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Mots de passe"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
 
-                <MDBBtn size="lg" onClick={handleLogin}>
-                  Login
-                </MDBBtn>
-              </MDBCardBody>
-            </MDBCard>
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
-    </div>
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2, bgcolor: "0084FF" }}
+                onClick={handleLogin}
+              >
+                Confirmer
+              </Button>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+    </ThemeProvider>
   );
 };
-
 export default Login;

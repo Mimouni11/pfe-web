@@ -27,6 +27,10 @@ const Navbar = () => {
   const navigateToTasks = () => {
     navigate("/chef/Tasks");
   };
+
+  const navigateToProfile = () => {
+    navigate("/chef/Profile");
+  };
   return (
     <MDBNavbar expand="lg" light style={{ backgroundColor: "#6C665A" }}>
       <MDBContainer fluid>
@@ -53,7 +57,9 @@ const Navbar = () => {
                 Create tasks
               </MDBNavbarLink>
             </MDBNavbarItem>
-
+            <MDBNavbarItem>
+              <MDBNavbarLink onClick={navigateToProfile}>Profile</MDBNavbarLink>
+            </MDBNavbarItem>
             <MDBNavbarItem>
               <MDBNavbarLink href="#"> Dashboard</MDBNavbarLink>
             </MDBNavbarItem>

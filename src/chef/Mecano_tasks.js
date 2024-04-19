@@ -4,7 +4,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./Mecano_tasks.css";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
-
+import Header from "./Header";
+import Sidebar from "./Sidebar";
+import SERVER_URL from "..///config";
 const Mecano_tasks = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [freeMechanics, setFreeMechanics] = useState([]);
@@ -25,7 +27,7 @@ const Mecano_tasks = () => {
     const formattedDate = utcDate.toISOString().split("T")[0]; // Make API call to fetch free mechanics
     console.log(formattedDate);
     axios
-      .post("http://192.168.1.107:5001/free-mechanics", {
+      .post(`http://${SERVER_URL}:5001/free-mechanics`, {
         date: formattedDate,
       })
       .then((response) => {
@@ -85,50 +87,58 @@ const Mecano_tasks = () => {
     }
 
     return (
-      <Table striped bordered hover responsive>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Tasks</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {freeMechanics.map((mechanic) => (
-            <tr key={mechanic.id}>
-              <td>{mechanic.name}</td>
-              <td>
-                <textarea
-                  placeholder="Enter tasks..."
-                  // Handle task input change
-                  onChange={(e) =>
-                    handleTaskChange(mechanic.id, e.target.value)
-                  }
-                ></textarea>
-              </td>
-              <td>
-                <button onClick={() => saveTasks(mechanic.id, mechanic.tasks)}>
-                  Save
-                </button>
-              </td>
+      <div className="main-container">
+        <Table striped bordered hover responsive>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Tasks</th>
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {freeMechanics.map((mechanic) => (
+              <tr key={mechanic.id}>
+                <td>{mechanic.name}</td>
+                <td>
+                  <textarea
+                    placeholder="Enter tasks..."
+                    // Handle task input change
+                    onChange={(e) =>
+                      handleTaskChange(mechanic.id, e.target.value)
+                    }
+                  ></textarea>
+                </td>
+                <td>
+                  <button
+                    onClick={() => saveTasks(mechanic.id, mechanic.tasks)}
+                  >
+                    Save
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
     );
   };
 
   return (
-    <div>
-      <h2>Select a Date</h2>
-      <DatePicker
-        selected={selectedDate}
-        onChange={(date) => setSelectedDate(date)}
-      />
-      <button onClick={fetchFreeMechanics}>Fetch Free Mechanics</button>
-      <div>
-        <h3>Free Mechanics:</h3>
-        {renderMechanics()}
+    <div className="grid-container">
+      <Header></Header>
+      <Sidebar></Sidebar>
+      <div className="main-container">
+        <h2>Select a Date</h2>
+        <DatePicker
+          selected={selectedDate}
+          onChange={(date) => setSelectedDate(date)}
+        />
+        <button onClick={fetchFreeMechanics}>Fetch Free Mechanics</button>
+        <div>
+          <h3>Free Mechanics:</h3>
+          {renderMechanics()}
+        </div>
       </div>
     </div>
   );

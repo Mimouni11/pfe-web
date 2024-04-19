@@ -1,14 +1,14 @@
 // Home.js
 import React from "react";
-import Navbar from "./Navbar";
-import Header from "./Header";
+import Header from "../chef/Header";
 import Sidebar from "./Sidebar";
 const Home = () => {
   return (
     <div className="grid-container">
+      {" "}
       <Header></Header>
       <Sidebar></Sidebar>
-      <p>JAJAJAJAJJAJA</p>
+      <p> jajajaj</p>
     </div>
   );
 };
