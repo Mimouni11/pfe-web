@@ -1,0 +1,112 @@
+/* Sidebar */
+#sidebar {
+  /* grid-area: sidebar; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  background-color: #dde6ed; /* Set the background color */
+  overflow-y: auto;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+}
+
+#sidebar div {
+  width: 100%;
+}
+
+.sidebar-navigation-items {
+  background-color: rebeccapurple;
+  width: 100%;
+}
+
+.logo {
+  max-width: 150px; /* Adjust the maximum width as needed */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 10px; /* Add some margin to separate it from the text */
+}
+
+.sidebar-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px 0px 30px;
+  margin-bottom: 30px;
+}
+
+.sidebar-title > .menu-icon {
+  display: none;
+}
+
+.sidebar-brand {
+  margin-top: 15px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.sidebar-list {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.sidebar-list-item {
+  padding: 20px 20px 20px 20px;
+  font-size: 18px;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.sidebar-list-item:hover {
+  background-color: #0084ff;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.sidebar-list-item > a {
+  text-decoration: none;
+  color: #9e9ea4;
+}
+
+.sidebar-responsive {
+  width: 0; /* Set width to 0 to hide the sidebar icons */
+  position: absolute;
+  z-index: 12;
+}
+
+.sidebar-responsive.show-icons {
+  width: auto; /* Show the sidebar icons */
+}
+
+.menu-icon {
+  position: absolute; /* Position the icon */
+  top: 50%; /* Align to the vertical center */
+  left: 50%; /* Align to the horizontal center */
+  transform: translate(-50%, -50%); /* Center the icon */
+}
+
+/* Other styles */
+
+.select-container {
+  display: flex;
+  align-items: center;
+}
+
+.select-dropdown {
+  flex: 1;
+  margin-left: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  color: #9e9ea4;
+}
+
+.select-dropdown:focus {
+  background-color: #0084ff;
+}
