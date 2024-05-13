@@ -164,6 +164,12 @@ const DriverTasks = () => {
       .post(`http://${SERVER_URL}:5001/insert-tasks-driver`, taskData)
       .then((response) => {
         console.log("Task inserted successfully:", response.data.message);
+        sendNotificationToDriver(
+          selectedDriver.username,
+
+          task.description
+        );
+
         // Optionally, you can reset the taskFields array for the current row after successful insertion
         setTaskFields((prevTaskFields) => {
           const updatedTaskFields = [...prevTaskFields];
@@ -175,6 +181,30 @@ const DriverTasks = () => {
         console.error("Error inserting task:", error);
       });
   };
+
+  const sendNotificationToDriver = (username, taskDescription) => {
+    // Prepare notification data
+    const notificationData = {
+      username: username,
+      title: `New Task Assigned: `,
+      message: `Task Description: ${taskDescription}`,
+      mecano: "Your Chef", // Assuming "Your Chef" is the username of the chef assigning the task
+    };
+    console.log(notificationData);
+    // Make POST request to send notification to the driver
+    axios
+      .post(
+        `http://${SERVER_URL}:5001/send_notificationdriver`,
+        notificationData
+      )
+      .then((response) => {
+        console.log("Notification sent to driver:", response.data.message);
+      })
+      .catch((error) => {
+        console.error("Error sending notification to driver:", error);
+      });
+  };
+
   const navigateToQRCode = () => {
     navigate("/chef/QrCode"); // Navigate to "/qr-code" when the button is clicked
   };

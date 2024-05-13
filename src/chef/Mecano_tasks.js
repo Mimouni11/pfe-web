@@ -71,12 +71,30 @@ const Mecano_tasks = () => {
         tasks: tasksToSave,
         date: selectedDate.toISOString().split("T")[0],
       })
+
       .then((response) => {
+        console.log(mechanicId);
         console.log("Tasks saved successfully: %j", response.data); // Optionally update UI or show a success message
+        sendNotificationToMecano(mechanicId, tasksToSave);
       })
       .catch((error) => {
         console.error("Error saving tasks:", error);
         // Optionally show an error message to the user
+      });
+  };
+
+  const sendNotificationToMecano = (mechanicId, tasks) => {
+    axios
+      .post(`http://${SERVER_URL}:5001/send_notificationmecano`, {
+        username: mechanicId,
+        title: "New Task Created",
+        message: `New tasks assigned: ${tasks}`,
+      })
+      .then((response) => {
+        console.log("Notification sent to mecano:", response.data.message);
+      })
+      .catch((error) => {
+        console.error("Error sending notification to mecano:", error);
       });
   };
 

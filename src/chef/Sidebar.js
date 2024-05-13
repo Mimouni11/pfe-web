@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 import LogoutIcon from "@mui/icons-material/Logout";
 import QrCodeIcon from "@mui/icons-material/QrCode";
+import MapIcon from "@mui/icons-material/Map";
 const Sidebar = ({ darkMode }) => {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -63,6 +64,10 @@ const Sidebar = ({ darkMode }) => {
     navigate("/chef/Dashboard");
   };
 
+  const navigateToMap = () => {
+    navigate("/chef/Tracking");
+  };
+
   if (openSidebarToggle)
     return (
       <aside
@@ -91,6 +96,10 @@ const Sidebar = ({ darkMode }) => {
             <a className="sidebar-list-item" onClick={navigateToTasks}>
               <BsFillGrid3X3GapFill className="icon" />
               <span>Créer des tâches </span>
+            </a>
+            <a className="sidebar-list-item" onClick={navigateToMap}>
+              <MapIcon className="icon" />
+              <span>map </span>
             </a>
           </div>
         </div>

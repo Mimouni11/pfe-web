@@ -13,7 +13,6 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 
-
 const FullWidthAppBar = styled(AppBar)(({ theme }) => ({
   width: "100vw", // Full width of the viewport
 }));
@@ -94,7 +93,6 @@ export default function PrimarySearchAppBar() {
         <p>Profile</p>
       </MenuItem>
     </Menu>
-    
   );
 
   return (

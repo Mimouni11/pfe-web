@@ -15,8 +15,9 @@ import Users from "./admin/Users";
 import "./chef/tasks.css";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import Tasks from "./chef/tasks";
-
 import Dashboard from "./chef/Dashboard";
+import Tracking from "./chef/Tracking";
+
 function App() {
   const [loading, setLoading] = useState(true);
   const [showLoginform, setShowLoginform] = useState(false);
@@ -57,6 +58,7 @@ function App() {
             <Route path="/Login" element={<Login />} />{" "}
             <Route path="/chef/Dashboard" element={<Dashboard />} />
             <Route path="/admin/Profile" element={<Profile></Profile>} />
+            <Route path="/chef/Tracking" element={<Tracking></Tracking>} />
             {/* Add more routes as needed */}
           </Routes>
         )}
