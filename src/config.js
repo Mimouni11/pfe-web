@@ -1,3 +1,3 @@
 // config.js
-const SERVER_URL = "192.168.1.169";
+const SERVER_URL = "192.168.0.201";
 export default SERVER_URL;

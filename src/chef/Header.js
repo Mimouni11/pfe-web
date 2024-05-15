@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -12,20 +12,24 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-
+import NotificationDropdown from "./NotificationMenu";
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook for navigation
 const FullWidthAppBar = styled(AppBar)(({ theme }) => ({
   width: "100vw", // Full width of the viewport
 }));
 
 export default function PrimarySearchAppBar() {
-  const [anchorEl, setAnchorEl] = React.useState(null); // Initialize as null
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null); // Initialize as null
-
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const navigateToProfile = () => {
+    handleMenuClose(); // Close the menu before navigation
+    navigate("/admin/Profile"); // Navigate to the profile page
   };
 
   const handleMobileMenuClose = () => {
@@ -40,6 +44,13 @@ export default function PrimarySearchAppBar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const toggleNotificationDropdown = () => {
+    setOpen(!open);
+  };
+
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -58,7 +69,7 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={navigateToProfile}>Profile</MenuItem>{" "}
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
@@ -115,6 +126,7 @@ export default function PrimarySearchAppBar() {
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
+              onClick={toggleNotificationDropdown} // Add onClick event here
             >
               <Badge badgeContent={17} color="error">
                 <NotificationsIcon />
@@ -148,6 +160,7 @@ export default function PrimarySearchAppBar() {
         {renderMobileMenu}
         {renderMenu}
       </Box>
+      <NotificationDropdown open={open} handleClose={() => setOpen(false)} />
     </div>
   );
 }

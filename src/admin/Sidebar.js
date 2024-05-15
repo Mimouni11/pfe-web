@@ -113,9 +113,10 @@ const Sidebar = ({ darkMode }) => {
             </label>
           </Box>
           <Box textAlign="center">
-            <Typography variant="h3" sx={{ m: "10px 10px 10px 10px" }}>
-              Boss
-            </Typography>
+            <Typography
+              variant="h3"
+              sx={{ m: "10px 10px 10px 10px" }}
+            ></Typography>
             <Typography>
               <a className="modif" onClick={goprofile}>
                 Modifier profile
