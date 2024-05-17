@@ -54,10 +54,15 @@ const Sidebar = ({ darkMode }) => {
     navigate("/admin/Users"); // Navigate to "/qr-code" when the button is clicked
   };
 
+  const navigateToVehicules = () => {
+    navigate("/admin/Vehicules"); // Navigate to "/qr-code" when the button is clicked
+  };
   const navigateToHome = () => {
     navigate("/admin/Home"); // Navigate to "/qr-code" when the button is clicked
   };
-
+  const navigateToSeeTasks = () => {
+    navigate("/admin/SeeTasks"); // Navigate to "/qr-code" when the button is clicked
+  };
   const navigateToProfile = () => {
     setShowConfirmation(true); // Show the confirmation box
   };
@@ -136,7 +141,15 @@ const Sidebar = ({ darkMode }) => {
           </a>
           <a className="sidebar-list-item" onClick={navigateToUsers}>
             <BsFillGrid3X3GapFill className="icon" />
-            <span>Gérer utilisateur</span>
+            <span>Gérer utilisateurs</span>
+          </a>
+          <a className="sidebar-list-item" onClick={navigateToVehicules}>
+            <BsFillGrid3X3GapFill className="icon" />
+            <span>Gérer vehicules</span>
+          </a>
+          <a className="sidebar-list-item" onClick={navigateToSeeTasks}>
+            <BsFillGrid3X3GapFill className="icon" />
+            <span>Tasks</span>
           </a>
         </div>
       </div>

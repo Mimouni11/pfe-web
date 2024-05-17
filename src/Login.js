@@ -49,6 +49,7 @@ const Login = () => {
         console.log(response.data);
 
         localStorage.setItem("username", response.data.username);
+        localStorage.setItem("role", response.data.role);
         console.log(localStorage.getItem("username"));
         const role = response.data.role;
         if (role === "admin") {

@@ -18,6 +18,8 @@ import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import Tasks from "./chef/tasks";
 import Dashboard from "./chef/Dashboard";
 import Tracking from "./chef/Tracking";
+import Vehicles from "./admin/Vehicules";
+import SeeTasks from "./admin/SeeTasks";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -54,6 +56,8 @@ function App() {
             <Route path="/chef/QrCode" element={<QrCode />} />
             <Route path="/chef/tasks" element={<Tasks />} />
             <Route path="/admin/Users" element={<Users />} />
+            <Route path="/admin/Vehicules" element={<Vehicles />} />
+            <Route path="/admin/SeeTasks" element={<SeeTasks />} />
             <Route path="/admin/Home" element={<Home />} />
             <Route path="/Gerer" element={<Gerer />} />{" "}
             <Route path="/Login" element={<Login />} />{" "}
