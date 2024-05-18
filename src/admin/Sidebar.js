@@ -63,6 +63,11 @@ const Sidebar = ({ darkMode }) => {
   const navigateToSeeTasks = () => {
     navigate("/admin/SeeTasks"); // Navigate to "/qr-code" when the button is clicked
   };
+
+  const navigateAdminTasks = () => {
+    navigate("/admin/AdminTasks"); // Navigate to "/qr-code" when the button is clicked
+  };
+
   const navigateToProfile = () => {
     setShowConfirmation(true); // Show the confirmation box
   };
@@ -147,6 +152,17 @@ const Sidebar = ({ darkMode }) => {
             <BsFillGrid3X3GapFill className="icon" />
             <span>Gérer vehicules</span>
           </a>
+
+          <a className="sidebar-list-item" onClick={navigateAdminTasks}>
+            <BsFillGrid3X3GapFill className="icon" />
+            <span>Pending Tasks mecano</span>
+          </a>
+
+          <a className="sidebar-list-item" onClick={navigateAdminTasks}>
+            <BsFillGrid3X3GapFill className="icon" />
+            <span>Pending Tasks driver</span>
+          </a>
+
           <a className="sidebar-list-item" onClick={navigateToSeeTasks}>
             <BsFillGrid3X3GapFill className="icon" />
             <span>Tasks</span>

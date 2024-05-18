@@ -20,6 +20,7 @@ import Dashboard from "./chef/Dashboard";
 import Tracking from "./chef/Tracking";
 import Vehicles from "./admin/Vehicules";
 import SeeTasks from "./admin/SeeTasks";
+import AdminTasks from "./admin/AdminTasks";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -58,6 +59,7 @@ function App() {
             <Route path="/admin/Users" element={<Users />} />
             <Route path="/admin/Vehicules" element={<Vehicles />} />
             <Route path="/admin/SeeTasks" element={<SeeTasks />} />
+            <Route path="/admin/AdminTasks" element={<AdminTasks />} />
             <Route path="/admin/Home" element={<Home />} />
             <Route path="/Gerer" element={<Gerer />} />{" "}
             <Route path="/Login" element={<Login />} />{" "}
