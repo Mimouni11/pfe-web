@@ -115,7 +115,7 @@ const UserProfile = () => {
             }}
             onClick={confirmChangeProfilePicture} // Open confirmation box when the "Modifier Avatar" button is clicked
           >
-            Modifier Avatar
+            Modifier Photo de profil
           </button>
           <button
             style={{

@@ -145,3 +145,30 @@
 .dark-mode .sidebar {
   background-color: black;
 }
+
+/* ------------------------------------------------*/
+
+/* Styling for individual containers */
+.container {
+  flex: 1;
+  padding: 20px;
+}
+
+.chart,
+.map {
+  flex: 1;
+  padding: 20px;
+}
+
+.chart {
+  max-width: 50%;
+}
+
+.map {
+  max-width: 50%;
+}
+
+.leaflet-container {
+  height: 500px; /* Square shape */
+  width: 500px;
+}

@@ -10,54 +10,40 @@ import {
   MDBDropdownMenu,
   MDBDropdownItem,
 } from "mdb-react-ui-kit";
-import Axios from "axios"; // Import Axios
+import Axios from "axios";
 import SERVER_URL from "../config";
-
+import User from "../Models/User"; // Adjust the import based on your file structure
+import Admin from "../Models/Admin";
 function Gerer() {
-  // Define state variables to store user input and validation status
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState(""); // Add password field
   const [selectedRole, setSelectedRole] = useState("");
   const [vehicleType, setVehicleType] = useState("");
-  const [nameValid, setNameValid] = useState(true); // Default to true since it's not initially invalid
-  const [emailValid, setEmailValid] = useState(true); // Default to true since it's not initially invalid
-  const [roleValid, setRoleValid] = useState(false); // Default to false since a role must be selected
-  const [error, setError] = useState(""); // State variable to store error message
+  const [nameValid, setNameValid] = useState(true);
+  const [emailValid, setEmailValid] = useState(true);
+  const [passwordValid, setPasswordValid] = useState(true); // Add password validation
+  const [roleValid, setRoleValid] = useState(false);
+  const [error, setError] = useState("");
 
-  // Function to handle form submission and API call
   const handleSubmit = async () => {
-    // Validate all fields except password
-    if (!name || !email || !selectedRole) {
+    if (!name || !email || !password || !selectedRole) {
       setError("All fields are required.");
       return;
     }
 
-    // If all fields are filled, clear any previous error
     setError("");
 
-    // Create form data
-    const formData = new FormData();
-    formData.append("username", name);
-    formData.append("email", email);
-    formData.append("role", selectedRole);
-    formData.append("vehicleType", vehicleType); // Append vehicleType to the form data
+    const user = new User(name, email, password, selectedRole, vehicleType);
 
     try {
-      // Make API call to add user
-      const response = await Axios.post(
-        `http://${SERVER_URL}:5001/add_user`,
-        formData
-      );
-
-      // Handle success
-      console.log("User added successfully:", response.data);
+      await Admin.createUser(user);
+      // Handle success (e.g., clear form, show success message)
     } catch (error) {
-      // Handle error
-      console.error("Error adding user:", error);
+      setError("Error adding user. Please try again.");
     }
   };
 
-  // Function to handle vehicle type selection
   const handleVehicleTypeChange = (type) => {
     setVehicleType(type);
   };
@@ -84,7 +70,7 @@ function Gerer() {
             type="text"
             onChange={(e) => {
               setName(e.target.value);
-              setNameValid(!!e.target.value); // Update name validity based on input
+              setNameValid(!!e.target.value);
             }}
           />
           <MDBInput
@@ -95,7 +81,18 @@ function Gerer() {
             type="email"
             onChange={(e) => {
               setEmail(e.target.value);
-              setEmailValid(!!e.target.value); // Update email validity based on input
+              setEmailValid(!!e.target.value);
+            }}
+          />
+          <MDBInput
+            wrapperClass="mb-4"
+            label="Password"
+            size="lg"
+            id="form3"
+            type="password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setPasswordValid(!!e.target.value);
             }}
           />
           <MDBDropdown>
@@ -106,7 +103,7 @@ function Gerer() {
               <MDBDropdownItem
                 onClick={() => {
                   setSelectedRole("driver");
-                  setRoleValid(true); // Update role validity when selected
+                  setRoleValid(true);
                 }}
               >
                 Driver
@@ -114,7 +111,7 @@ function Gerer() {
               <MDBDropdownItem
                 onClick={() => {
                   setSelectedRole("mechanic");
-                  setRoleValid(true); // Update role validity when selected
+                  setRoleValid(true);
                 }}
               >
                 Mechanic
@@ -122,14 +119,13 @@ function Gerer() {
               <MDBDropdownItem
                 onClick={() => {
                   setSelectedRole("chef");
-                  setRoleValid(true); // Update role validity when selected
+                  setRoleValid(true);
                 }}
               >
                 Chef
               </MDBDropdownItem>
             </MDBDropdownMenu>
           </MDBDropdown>
-          {/* Conditionally render the vehicle type dropdown */}
           {selectedRole === "driver" && (
             <MDBDropdown>
               <MDBDropdownToggle className="mb-4 w-100" color="light" size="lg">
@@ -158,11 +154,10 @@ function Gerer() {
             className="mb-4 w-100 gradient-custom-4"
             size="lg"
             onClick={handleSubmit}
-            disabled={!nameValid || !emailValid || !roleValid}
+            disabled={!nameValid || !emailValid || !passwordValid || !roleValid}
           >
             Register
           </MDBBtn>
-          {/* Render error message */}
           {error && <div style={{ color: "red" }}>{error}</div>}
         </MDBCardBody>
       </MDBCard>
