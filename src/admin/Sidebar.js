@@ -58,6 +58,10 @@ const Sidebar = ({ darkMode }) => {
     navigate("/admin/Profile");
   };
 
+  const navigateToDashboard = () => {
+    navigate("/admin/DashboardAdmin");
+  };
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -111,7 +115,7 @@ const Sidebar = ({ darkMode }) => {
             <HomeIcon className="icon" />
             <span>Home</span>
           </a>
-          <a className="sidebar-list-item">
+          <a className="sidebar-list-item" onClick={navigateToDashboard}>
             <DashboardIcon className="icon" />
             <span>Dashboard</span>
           </a>

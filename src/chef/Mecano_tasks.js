@@ -15,7 +15,6 @@ const Mecano_tasks = () => {
   const [matricule, setMatricule] = useState("");
 
   const fetchFreeMechanics = () => {
-    // Check if a date is selected
     if (!selectedDate) {
       alert("Please select a date");
       return;
@@ -53,7 +52,18 @@ const Mecano_tasks = () => {
     });
     setFreeMechanics(updatedMechanics);
   };
-  const saveTasks = (mechanicId, tasks) => {
+
+  const handleTypeChange = (mechanicId, taskType) => {
+    const updatedMechanics = freeMechanics.map((mechanic) => {
+      if (mechanic.id === mechanicId) {
+        return { ...mechanic, taskType: taskType };
+      }
+      return mechanic;
+    });
+    setFreeMechanics(updatedMechanics);
+  };
+
+  const saveTasks = (mechanicId) => {
     const updatedMechanic = freeMechanics.find(
       (mechanic) => mechanic.id === mechanicId
     );
@@ -61,21 +71,22 @@ const Mecano_tasks = () => {
       console.error("Mechanic not found");
       return;
     }
-    const tasksToSave = updatedMechanic.tasks;
-    const { model, matricule } = updatedMechanic; // Destructure model and matricule
+    const { tasks, model, matricule, taskType } = updatedMechanic;
 
     axios
       .post(`http://${SERVER_URL}:5001/insert-tasks`, {
         id_mecano: mechanicId,
-        tasks: tasksToSave,
+        tasks: tasks,
         date: selectedDate.toISOString().split("T")[0],
-        model: model, // Include model in the request body
-        matricule: matricule, // Include matricule in the request body
+        model: model,
+        matricule: matricule,
+        tasktype: taskType, // Make sure taskType is correctly included
       })
+
       .then((response) => {
         console.log(mechanicId);
         console.log("Tasks saved successfully: %j", response.data);
-        sendNotificationToMecano(mechanicId, tasksToSave);
+        sendNotificationToMecano(mechanicId, tasks);
       })
       .catch((error) => {
         console.error("Error saving tasks:", error);
@@ -103,19 +114,16 @@ const Mecano_tasks = () => {
     }
 
     const handleModelChange = (mechanicId, selectedModel) => {
-      // Update model state when model is changed
       setModel(selectedModel);
       handleMechanicDataChange(mechanicId, { model: selectedModel });
     };
 
     const handleMatriculeChange = (mechanicId, selectedMatricule) => {
-      // Update matricule state when matricule is changed
       setMatricule(selectedMatricule);
       handleMechanicDataChange(mechanicId, { matricule: selectedMatricule });
     };
 
     const handleMechanicDataChange = (mechanicId, updatedData) => {
-      // Update the specific mechanic's data
       const updatedMechanics = freeMechanics.map((mechanic) => {
         if (mechanic.id === mechanicId) {
           return { ...mechanic, ...updatedData };
@@ -134,6 +142,7 @@ const Mecano_tasks = () => {
               <th>Model</th>
               <th>Matricule</th>
               <th>Tasks</th>
+              <th>Type</th> {/* New column for task type */}
               <th>Action</th>
             </tr>
           </thead>
@@ -165,14 +174,28 @@ const Mecano_tasks = () => {
                 <td>
                   <textarea
                     placeholder="Enter tasks..."
+                    value={mechanic.tasks}
                     onChange={(e) =>
                       handleTaskChange(mechanic.id, e.target.value)
                     }
                   ></textarea>
                 </td>
                 <td>
+                  <select
+                    value={mechanic.taskType || "maintenance"}
+                    onChange={(e) =>
+                      handleTypeChange(mechanic.id, e.target.value)
+                    }
+                  >
+                    <option value="maintenance">Maintenance</option>
+                    <option value="reparation">Reparation</option>
+                  </select>
+                </td>
+                <td>
                   <button
-                    onClick={() => saveTasks(mechanic.id, mechanic.tasks)}
+                    onClick={() =>
+                      saveTasks(mechanic.id, mechanic.tasks, mechanic.taskType)
+                    }
                   >
                     Save
                   </button>
@@ -183,26 +206,6 @@ const Mecano_tasks = () => {
         </Table>
       </div>
     );
-  };
-
-  const handleModelChange = (mechanicId, model) => {
-    const updatedMechanics = freeMechanics.map((mechanic) => {
-      if (mechanic.id === mechanicId) {
-        return { ...mechanic, model: model };
-      }
-      return mechanic;
-    });
-    setFreeMechanics(updatedMechanics);
-  };
-
-  const handleMatriculeChange = (mechanicId, matricule) => {
-    const updatedMechanics = freeMechanics.map((mechanic) => {
-      if (mechanic.id === mechanicId) {
-        return { ...mechanic, matricule: matricule };
-      }
-      return mechanic;
-    });
-    setFreeMechanics(updatedMechanics);
   };
 
   return (

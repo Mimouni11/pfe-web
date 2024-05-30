@@ -11,7 +11,7 @@ import Mecano_tasks from "./chef/Mecano_tasks";
 import Driver_tasks from "./chef/Driver_tasks";
 import QrCode from "./chef/QrCode";
 import Profile from "./admin/Profile";
-
+import DashboardAdmin from "./admin/DashboardAdmin";
 import Users from "./admin/Users";
 import "./chef/tasks.css";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
@@ -59,6 +59,7 @@ function App() {
             <Route path="/admin/Vehicules" element={<Vehicles />} />
             <Route path="/admin/SeeTasks" element={<SeeTasks />} />
             <Route path="/admin/Home" element={<Home />} />
+            <Route path="/admin/DashboardAdmin" element={<DashboardAdmin />} />
             <Route path="/Gerer" element={<Gerer />} />{" "}
             <Route path="/Login" element={<Login />} />{" "}
             <Route path="/chef/Dashboard" element={<Dashboard />} />
