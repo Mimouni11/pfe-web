@@ -1,3 +1,4 @@
+/* Global styles for grid layout */
 .grid-container {
   display: grid;
   grid-template-columns: 240px 1fr;
@@ -9,12 +10,14 @@
   overflow-y: auto;
 }
 
+/* Grid content styles */
 .grid-content {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  display: flex;
+  flex-wrap: wrap;
   gap: 20px;
 }
 
+/* Chart card styles */
 .chart-card {
   background: #fff;
   border-radius: 8px;
@@ -25,16 +28,7 @@
   align-items: center;
 }
 
-.chart-card h2 {
-  margin-top: 0;
-}
-
-.chart-container {
-  width: 100%;
-  max-width: 600px;
-  margin: auto;
-}
-
+/* Selection styles */
 ::selection {
   color: black; /* Set selected text color to black */
   background: #b3d4fc; /* Optional: Change the background color of selected text */
