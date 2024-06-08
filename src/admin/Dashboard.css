@@ -7,6 +7,10 @@
   padding: 20px;
 }
 
+.dashboard-select {
+  margin-bottom: 20px; /* Add some space below the select */
+}
+
 .dashboard-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* Two columns for dashboard items */
