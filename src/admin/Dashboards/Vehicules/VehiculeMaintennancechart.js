@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Line } from "@nivo/line";
+import { ResponsiveBar } from "@nivo/bar";
 import SERVER_URL from "../../../config";
 
-const VehicleMaintenanceChart = ({ vehicleId }) => {
+const VehicleMaintenanceBarChart = ({ vehicleId }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://${SERVER_URL}:5001/vehicle-maintenance-fact`
+          `http://${SERVER_URL}:5001/vehicle-maintenance-by-vehicle/${vehicleId}`
         );
         setData(response.data);
       } catch (error) {
@@ -19,18 +19,18 @@ const VehicleMaintenanceChart = ({ vehicleId }) => {
     };
 
     fetchData();
-  }, [vehicleId]); // Add vehicleId as a dependency
-
-  // Filter data for the specific vehicle
-  const filteredData = data.filter((item) => item.vehicle_id === vehicleId);
+  }, [vehicleId]);
 
   // Prepare data for the chart
-  const chartData = filteredData
-    .filter((item) => item.last_maintenance_date_key) // Filter out items with undefined or null last_maintenance_date_key
+  const chartData = data
+    .filter((item) => item.last_maintenance_date_key)
     .map((item) => ({
-      x: item.last_maintenance_date_key,
-      y: item.maintenance_interval,
-    }));
+      date: new Date(item.last_maintenance_date_key)
+        .toISOString()
+        .split("T")[0], // Ensuring the date is properly formatted
+      interval: item.maintenance_interval,
+    }))
+    .filter((item) => !isNaN(new Date(item.date).getTime())); // Filtering out invalid dates
 
   // Check if chartData is empty
   if (chartData.length === 0) {
@@ -40,25 +40,14 @@ const VehicleMaintenanceChart = ({ vehicleId }) => {
   return (
     <div style={{ height: 400 }}>
       <h2>Maintenance Interval Trend for Vehicle {vehicleId}</h2>
-      <Line
-        data={[
-          {
-            id: `Vehicle ${vehicleId}`,
-            data: chartData,
-          },
-        ]}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-        xScale={{ type: "time", format: "%Y-%m-%d" }}
-        xFormat="time:%Y-%m-%d"
-        yScale={{
-          type: "linear",
-          min: "auto",
-          max: "auto",
-          stacked: true,
-          reverse: false,
-        }}
+      <ResponsiveBar
+        data={chartData}
+        keys={["interval"]}
+        indexBy="date"
+        margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+        padding={0.3}
         axisBottom={{
-          format: "%b %d",
+          format: "%Y-%m-%d",
           tickValues: "every 1 month",
           legend: "Last Maintenance Date",
           legendOffset: 36,
@@ -76,4 +65,4 @@ const VehicleMaintenanceChart = ({ vehicleId }) => {
   );
 };
 
-export default VehicleMaintenanceChart;
+export default VehicleMaintenanceBarChart;

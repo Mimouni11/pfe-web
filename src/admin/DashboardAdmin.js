@@ -9,6 +9,9 @@ import ActiveToTotalUsersRatio from "./Dashboards/Activetotalusers";
 import VehicleMaintenanceChart from "./Dashboards/Vehicules/VehiculeMaintennancechart";
 import "./Dashboard.css";
 import VehicleMaintenanceTable from "./Dashboards/Vehicules/VehiculeMaintenancetable";
+import VehicleMaintenancePieChart from "./Dashboards/Vehicules/VehicleMaintenancePieChart";
+import VehicleMaintenancePieChartmodel from "./Dashboards/Vehicules/Vehiclemaintenancemodel";
+import VehicleStatusPieChart from "./Dashboards/Vehicules/VehicleStatusPieChart";
 const options = [
   { value: "userManagement", label: "User Management" },
   { value: "vehicleManagement", label: "Vehicle Management" },
@@ -18,9 +21,14 @@ const options = [
 
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [selectedVehicle, setSelectedVehicle] = useState(null);
 
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption);
+  };
+
+  const handleSelectVehicle = (vehicleId) => {
+    setSelectedVehicle(vehicleId);
   };
 
   return (
@@ -37,8 +45,13 @@ const Dashboard = () => {
         <div className="dashboard-container">
           {selectedOption.value === "vehicleManagement" ? (
             <>
-              <VehicleMaintenanceChart />
-              <VehicleMaintenanceTable />
+              {selectedVehicle && (
+                <VehicleMaintenanceChart vehicleId={selectedVehicle} />
+              )}
+              <VehicleMaintenanceTable onSelectVehicle={handleSelectVehicle} />
+              <VehicleMaintenancePieChart></VehicleMaintenancePieChart>
+              <VehicleMaintenancePieChartmodel></VehicleMaintenancePieChartmodel>
+              <VehicleStatusPieChart></VehicleStatusPieChart>
             </>
           ) : (
             <>

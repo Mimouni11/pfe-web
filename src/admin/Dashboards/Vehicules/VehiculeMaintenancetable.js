@@ -3,7 +3,7 @@ import axios from "axios";
 import SERVER_URL from "../../../config";
 import Table from "react-bootstrap/Table";
 
-const VehicleMaintenanceTable = () => {
+const VehicleMaintenanceTable = ({ onSelectVehicle }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -33,6 +33,7 @@ const VehicleMaintenanceTable = () => {
             <th>Last Repair Date</th>
             <th>Maintenance Interval</th>
             <th>Time Since Last Repair</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -44,6 +45,11 @@ const VehicleMaintenanceTable = () => {
               <td>{item.last_repared_at_key}</td>
               <td>{item.maintenance_interval}</td>
               <td>{item.time_since_last_repair}</td>
+              <td>
+                <button onClick={() => onSelectVehicle(item.vehicle_id)}>
+                  View Chart
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
