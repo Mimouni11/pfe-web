@@ -1,35 +1,21 @@
-/* Global styles for grid layout */
 .grid-container {
   display: grid;
-  grid-template-columns: 240px 1fr;
-  height: 100vh;
+  grid-template-columns: 1fr 4fr; /* Sidebar and main content */
 }
 
 .main-container {
   padding: 20px;
-  overflow-y: auto;
 }
 
-/* Grid content styles */
-.grid-content {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+.dashboard-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns for dashboard items */
+  gap: 20px; /* Gap between grid items */
 }
 
-/* Chart card styles */
-.chart-card {
-  background: #fff;
-  border-radius: 8px;
+.dashboard-container > div {
+  border: 1px solid #ccc;
   padding: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Selection styles */
-::selection {
-  color: black; /* Set selected text color to black */
-  background: #b3d4fc; /* Optional: Change the background color of selected text */
+  border-radius: 8px;
+  background-color: #fff; /* Optional: Add background color for better visibility */
 }
