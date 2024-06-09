@@ -7,11 +7,13 @@ import DailyActiveUsersDashboard from "./Dashboards/DailyActiveUsersDashboard";
 import AverageActivityPerDay from "./Dashboards/AverageactivityPerday";
 import ActiveToTotalUsersRatio from "./Dashboards/Activetotalusers";
 import VehicleMaintenanceChart from "./Dashboards/Vehicules/VehiculeMaintennancechart";
-import "./Dashboard.css";
 import VehicleMaintenanceTable from "./Dashboards/Vehicules/VehiculeMaintenancetable";
 import VehicleMaintenancePieChart from "./Dashboards/Vehicules/VehicleMaintenancePieChart";
 import VehicleMaintenancePieChartmodel from "./Dashboards/Vehicules/Vehiclemaintenancemodel";
 import VehicleStatusPieChart from "./Dashboards/Vehicules/VehicleStatusPieChart";
+import DriversList from "./Dashboards/Driver_fact/Drivers_list"; // Import the DriversList component
+import "./Dashboard.css";
+
 const options = [
   { value: "userManagement", label: "User Management" },
   { value: "vehicleManagement", label: "Vehicle Management" },
@@ -49,10 +51,12 @@ const Dashboard = () => {
                 <VehicleMaintenanceChart vehicleId={selectedVehicle} />
               )}
               <VehicleMaintenanceTable onSelectVehicle={handleSelectVehicle} />
-              <VehicleMaintenancePieChart></VehicleMaintenancePieChart>
-              <VehicleMaintenancePieChartmodel></VehicleMaintenancePieChartmodel>
-              <VehicleStatusPieChart></VehicleStatusPieChart>
+              <VehicleMaintenancePieChart />
+              <VehicleMaintenancePieChartmodel />
+              <VehicleStatusPieChart />
             </>
+          ) : selectedOption.value === "driverTasks" ? (
+            <DriversList /> // Render DriversList component for driver tasks
           ) : (
             <>
               <div>
