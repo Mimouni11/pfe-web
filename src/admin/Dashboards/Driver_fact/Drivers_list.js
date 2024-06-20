@@ -30,7 +30,7 @@ const DriversList = () => {
 
   return (
     <div style={{ height: 400, width: "100%" }}>
-      <h2>Drivers List</h2>
+      <h2>Liste des chauffeurs</h2>
       <DataGrid
         rows={drivers}
         columns={columns}

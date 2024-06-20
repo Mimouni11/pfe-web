@@ -35,14 +35,14 @@ const VehicleStatusPieChart = () => {
 
   return (
     <div style={{ height: 400 }}>
-      <h2>Vehicle Status Distribution</h2>
+      <h2>Répartition de l'état du véhicule</h2>
       <ResponsivePie
         data={chartData}
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
-        colors={{ scheme: "nivo" }}
+        colors={{ scheme: "blues" }}
         borderWidth={1}
         borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
         radialLabelsSkipAngle={10}

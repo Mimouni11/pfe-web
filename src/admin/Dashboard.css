@@ -1,6 +1,7 @@
 .grid-container {
   display: grid;
-  grid-template-columns: 1fr 4fr; /* Sidebar and main content */
+  grid-template-columns: 1fr 4fr;
+  gap: 20px;
 }
 
 .main-container {
@@ -8,18 +9,28 @@
 }
 
 .dashboard-select {
-  margin-bottom: 20px; /* Add some space below the select */
+  margin-bottom: 20px;
 }
 
 .dashboard-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two columns for dashboard items */
-  gap: 20px; /* Gap between grid items */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* space between components */
 }
 
-.dashboard-container > div {
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 8px;
-  background-color: #fff; /* Optional: Add background color for better visibility */
+.driver-tasks-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Add space between the components */
+}
+
+.drivers-list-container,
+.driver-tasks-list-container {
+  min-height: 400px; /* Ensure each container has a minimum height */
+  margin-bottom: 10%; /* Add bottom margin to separate them visually */
+}
+
+.data-grid {
+  flex: 1; /* Allows the grid to grow and fill available space */
+  overflow: auto; /* Allow scrolling if content overflows */
 }

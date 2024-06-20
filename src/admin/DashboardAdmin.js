@@ -11,9 +11,15 @@ import VehicleMaintenanceTable from "./Dashboards/Vehicules/VehiculeMaintenancet
 import VehicleMaintenancePieChart from "./Dashboards/Vehicules/VehicleMaintenancePieChart";
 import VehicleMaintenancePieChartmodel from "./Dashboards/Vehicules/Vehiclemaintenancemodel";
 import VehicleStatusPieChart from "./Dashboards/Vehicules/VehicleStatusPieChart";
-import DriversList from "./Dashboards/Driver_fact/Drivers_list"; // Import the DriversList component
+import DriversList from "./Dashboards/Driver_fact/Drivers_list";
+import DriverTasksList from "./Dashboards/Driver_fact/Driver_tasks";
 import "./Dashboard.css";
-
+import Kilometrage from "./Dashboards/Driver_fact/Kilmotrage";
+import Destination_count from "./Dashboards/Driver_fact/destinations_count";
+import MechanicPerformanceChart from "./Dashboards/mecano_fact/mecanoperformance";
+import VehicleModelPerformanceRadialBarChar from "./Dashboards/mecano_fact/VehicleModelPerformanceChart";
+import TaskDetails from "./Dashboards/mecano_fact/TasksList";
+import TasksDoneOverTimeChart from "./Dashboards/mecano_fact/TasksDoneOverTimeChart";
 const options = [
   { value: "userManagement", label: "User Management" },
   { value: "vehicleManagement", label: "Vehicle Management" },
@@ -56,7 +62,23 @@ const Dashboard = () => {
               <VehicleStatusPieChart />
             </>
           ) : selectedOption.value === "driverTasks" ? (
-            <DriversList /> // Render DriversList component for driver tasks
+            <div className="driver-tasks-container">
+              <div className="drivers-list-container">
+                <DriversList className="data-grid" />
+              </div>
+              <div className="driver-tasks-list-container">
+                <DriverTasksList className="data-grid" />
+              </div>
+              <Kilometrage></Kilometrage>
+              <Destination_count></Destination_count>
+            </div>
+          ) : selectedOption.value === "mecanoTasks" ? (
+            <>
+              <MechanicPerformanceChart></MechanicPerformanceChart>
+              <VehicleModelPerformanceRadialBarChar></VehicleModelPerformanceRadialBarChar>
+              <TasksDoneOverTimeChart></TasksDoneOverTimeChart>
+              <TaskDetails></TaskDetails>
+            </>
           ) : (
             <>
               <div>
