@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ResponsiveLine } from "@nivo/line";
-import SERVER_URL from "../../config";
+import SERVER_URL from "../../../config";
 
-const DailyActiveUsersDashboard = () => {
+const NewUsersCountByDateDashboard = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,15 +12,15 @@ const DailyActiveUsersDashboard = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://${SERVER_URL}:5001/daily-active-users`
+          `http://${SERVER_URL}:5001/new-users-count-by-date`
         );
 
         const formattedData = [
           {
-            id: "Daily Active Users",
+            id: "New Users",
             data: response.data.map((item) => ({
-              x: item.date_key,
-              y: item.daily_active_users,
+              x: item.hire_date,
+              y: item.new_users_count,
             })),
           },
         ];
@@ -45,9 +45,11 @@ const DailyActiveUsersDashboard = () => {
     return <div>{error}</div>;
   }
 
+  console.log("Data:", data);
+
   return (
-    <div className="chart-container">
-      <h2>Daily Active Users</h2>
+    <div className="chart-container" style={{ height: "400px", width: "100%" }}>
+      <h2>New Users Count by Date</h2>
       <ResponsiveLine
         data={data}
         margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
@@ -75,7 +77,7 @@ const DailyActiveUsersDashboard = () => {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "Active Users",
+          legend: "New Users",
           legendOffset: -40,
           legendPosition: "middle",
         }}
@@ -117,4 +119,4 @@ const DailyActiveUsersDashboard = () => {
   );
 };
 
-export default DailyActiveUsersDashboard;
+export default NewUsersCountByDateDashboard;

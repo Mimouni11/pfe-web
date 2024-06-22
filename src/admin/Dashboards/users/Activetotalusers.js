@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ResponsivePie } from "@nivo/pie";
-import SERVER_URL from "../../config";
+import SERVER_URL from "../../../config";
 
 const ActiveToTotalUsersRatio = () => {
   const [data, setData] = useState([]);
@@ -30,13 +30,13 @@ const ActiveToTotalUsersRatio = () => {
           {
             id: "Active Users",
             label: "Active Users",
-            value: activePercentage,
+            value: parseFloat(activePercentage),
             percentage: `${activePercentage}%`,
           },
           {
             id: "Inactive Users",
             label: "Inactive Users",
-            value: inactivePercentage,
+            value: parseFloat(inactivePercentage),
             percentage: `${inactivePercentage}%`,
           },
         ];
@@ -61,8 +61,10 @@ const ActiveToTotalUsersRatio = () => {
     return <div>{error}</div>;
   }
 
+  console.log("Data:", data);
+
   return (
-    <div className="chart-container">
+    <div className="chart-container" style={{ height: "400px", width: "100%" }}>
       <h2>Active to Total Users Ratio</h2>
       <ResponsivePie
         data={data}
@@ -70,7 +72,7 @@ const ActiveToTotalUsersRatio = () => {
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
-        colors={{ scheme: "nivo" }}
+        colors={{ scheme: "blues" }}
         borderWidth={1}
         borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
         radialLabelsSkipAngle={10}

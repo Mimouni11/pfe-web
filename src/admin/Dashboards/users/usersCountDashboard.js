@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ResponsiveBar } from "@nivo/bar";
-import SERVER_URL from "../../config";
+import SERVER_URL from "../../../config";
 
 const ActiveUsersCountDashboard = () => {
   const [data, setData] = useState([]);
@@ -49,8 +49,10 @@ const ActiveUsersCountDashboard = () => {
     return <div>{error}</div>;
   }
 
+  console.log("Data:", data);
+
   return (
-    <div className="chart-container">
+    <div className="chart-container" style={{ height: "400px", width: "100%" }}>
       <h2>Active vs Inactive Users Count</h2>
       <ResponsiveBar
         data={data}
@@ -58,7 +60,7 @@ const ActiveUsersCountDashboard = () => {
         indexBy="status"
         margin={{ top: 50, right: 50, bottom: 50, left: 60 }}
         padding={0.3}
-        colors={{ scheme: "nivo" }}
+        colors={{ scheme: "blues" }}
         borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
         axisTop={null}
         axisRight={null}

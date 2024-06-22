@@ -127,14 +127,7 @@ const Sidebar = ({ darkMode }) => {
             <BsFillGrid3X3GapFill className="icon" />
             <span>Gérer vehicules</span>
           </a>
-          <a className="sidebar-list-item" onClick={navigateAdminTasks}>
-            <BsFillGrid3X3GapFill className="icon" />
-            <span>Pending Tasks mecano</span>
-          </a>
-          <a className="sidebar-list-item" onClick={navigateAdminTasksdriver}>
-            <BsFillGrid3X3GapFill className="icon" />
-            <span>Pending Tasks driver</span>
-          </a>
+
           <a className="sidebar-list-item" onClick={navigateToSeeTasks}>
             <BsFillGrid3X3GapFill className="icon" />
             <span>Tasks</span>

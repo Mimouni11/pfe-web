@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ResponsiveBar } from "@nivo/bar";
-import SERVER_URL from "../../config";
+import SERVER_URL from "../../../config";
 
 const AverageActivityPerDay = () => {
   const [data, setData] = useState([]);
@@ -40,8 +40,10 @@ const AverageActivityPerDay = () => {
     return <div>{error}</div>;
   }
 
+  console.log("Data:", data);
+
   return (
-    <div className="chart-container">
+    <div className="chart-container" style={{ height: "400px", width: "100%" }}>
       <h2>Average Activity Per Day</h2>
       <ResponsiveBar
         data={data}
@@ -49,7 +51,7 @@ const AverageActivityPerDay = () => {
         indexBy="user"
         margin={{ top: 50, right: 50, bottom: 100, left: 60 }}
         padding={0.3}
-        colors={{ scheme: "nivo" }}
+        colors={{ scheme: "blues" }}
         borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
         axisTop={null}
         axisRight={null}

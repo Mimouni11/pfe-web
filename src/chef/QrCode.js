@@ -17,7 +17,7 @@ const QrCode = () => {
   const [selectedOption, setSelectedOption] = useState(""); // New state for dropdown selection
 
   const [tasks, setTasks] = useState([]);
-  const [qrCodes, setQRCodes] = useState([]); // New state to store QR Codes
+  // const [qrCodes, setQRCodes] = useState([]); // New state to store QR Codes
   const handleSearch = () => {
     // Fetch tasks based on the entered matricule
     axios
@@ -49,32 +49,32 @@ const QrCode = () => {
       });
   };
 
-  const fetchQRCodes = async () => {
-    try {
-      const response = await axios.get(
-        `http://${SERVER_URL}:5001/fetch-qr-codes`
-      );
-      const data = response.data;
-      // Check if qr_codes exists
-      console.log("data", data);
-      if (data && data.qr_codes) {
-        setQRCodes(data.qr_codes);
-      } else {
-        setQRCodes([]);
-      }
-    } catch (error) {
-      console.error("Error fetching QR codes:", error);
-      setQRCodes([]);
-    }
-  };
+  // const fetchQRCodes = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://${SERVER_URL}:5001/fetch-qr-codes`
+  //     );
+  //     const data = response.data;
+  //     // Check if qr_codes exists
+  //     console.log("data", data);
+  //     if (data && data.qr_codes) {
+  //       setQRCodes(data.qr_codes);
+  //     } else {
+  //       setQRCodes([]);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching QR codes:", error);
+  //     setQRCodes([]);
+  //   }
+  // };
 
   const decodeQRCode = (qrCodeBase64) => {
     return atob(qrCodeBase64);
   };
 
-  useEffect(() => {
-    fetchQRCodes(); // Fetch QR codes on component mount
-  }, []); // Empty dependency array ensures the effect runs only once after the initial render
+  // useEffect(() => {
+  //   fetchQRCodes(); // Fetch QR codes on component mount
+  // }, []); // Empty dependency array ensures the effect runs only once after the initial render
 
   const generateQRCodeValue = () => {
     if (tasks.length > 0) {
@@ -185,7 +185,7 @@ const QrCode = () => {
             </MDBDropdownMenu>
           </MDBDropdown>
           <button onClick={handleSearch}>Search</button>
-          <button onClick={fetchQRCodes}>Fetch QR Codes</button>
+          {/* <button onClick={fetchQRCodes}>Fetch QR Codes</button> */}
 
           {tasks.length > 0 && (
             <div>
@@ -213,7 +213,7 @@ const QrCode = () => {
             </div>
           )}
 
-          {qrCodes.length > 0 && (
+          {/* {qrCodes.length > 0 && (
             <div>
               <h2>Fetched QR Codes</h2>
               {qrCodes.map((qrCodeData, index) => (
@@ -223,7 +223,7 @@ const QrCode = () => {
                 </div>
               ))}
             </div>
-          )}
+          )} */}
 
           {tasks.length > 0 && (
             <div>

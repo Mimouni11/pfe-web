@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import Sidebar from "./Sidebar";
-import ActiveUsersCountDashboard from "./Dashboards/usersCountDashboard";
-import NewUsersCountByDateDashboard from "./Dashboards/newusersperdate";
-import DailyActiveUsersDashboard from "./Dashboards/DailyActiveUsersDashboard";
-import AverageActivityPerDay from "./Dashboards/AverageactivityPerday";
-import ActiveToTotalUsersRatio from "./Dashboards/Activetotalusers";
+import ActiveUsersCountDashboard from "./Dashboards/users/usersCountDashboard";
+import NewUsersCountByDateDashboard from "./Dashboards/users/newusersperdate";
+import DailyActiveUsersDashboard from "./Dashboards/users/DailyActiveUsersDashboard";
+import AverageActivityPerDay from "./Dashboards/users/AverageactivityPerday";
+import ActiveToTotalUsersRatio from "./Dashboards/users/Activetotalusers";
 import VehicleMaintenanceChart from "./Dashboards/Vehicules/VehiculeMaintennancechart";
 import VehicleMaintenanceTable from "./Dashboards/Vehicules/VehiculeMaintenancetable";
 import VehicleMaintenancePieChart from "./Dashboards/Vehicules/VehicleMaintenancePieChart";

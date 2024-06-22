@@ -28,7 +28,7 @@ function App() {
     // Simulate loading process (e.g., fetch data, initialize app)
     setTimeout(() => {
       setLoading(false); // Set loading state to false after a delay
-    }, 2000); // Simulated loading time: 2 seconds
+    }, 4000); // Simulated loading time: 2 seconds
   }, []);
 
   useEffect(() => {

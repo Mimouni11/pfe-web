@@ -53,10 +53,10 @@ const Login = () => {
         console.log(localStorage.getItem("username"));
         const role = response.data.role;
         if (role === "admin") {
-          navigate("/Home");
+          navigate("/admin/DashboardAdmin");
         } else if (role === "chef") {
           console.log(response.data.role);
-          navigate("/chef/Home");
+          navigate("/chef/Dashboard");
         }
       } else {
         console.log("Authentication failed");
@@ -105,7 +105,15 @@ const Login = () => {
               alignItems: "center",
             }}
           >
-            <img src="/logo.png" alt="Logo" className="logo" />
+            <img
+              src="/logo.png"
+              alt="Logo"
+              className="logo"
+              style={{
+                display: "block",
+                margin: "0 auto",
+              }}
+            />
 
             <Typography component="h1" variant="h5">
               Athentification
